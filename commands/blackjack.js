@@ -87,11 +87,14 @@ module.exports = {
         let ask = true;
         let userScore = 0;
         let userBomb = false;
+        let usercardnum = 2;
+        let userPass = false;
         collector.on("collect", async (collected) => {
             ask = collected.customId === "more";
             let buttonEmbed = new EmbedBuilder().setColor("#ffffff").setTitle(`決戰21點`);
             if (seeResult) userScore = 21;
             if (ask) {
+                usercardnum += 1;
                 const newCard = hitCard(cards, userCards);
                 buttonEmbed.setDescription(`你抽到了 ${newCard}`);
                 userScore = judgeContainedCase(userCards);
@@ -116,6 +119,9 @@ module.exports = {
 
             //topic : 判斷輸贏
             buttonEmbed = new EmbedBuilder().setColor("#ffffff").setTitle(`決戰21點`);
+            if (usercardnum === 5) {
+                userPass = true;
+            }
             if (userBomb)
                 embedReply(
                     `你爆牌了！ (${userCards.join(", ")})`,
@@ -146,6 +152,13 @@ module.exports = {
                             buttonEmbed,
                             "ff0000",
                             "https://media.giphy.com/media/lwYxf0qKEjnoI/giphy-downsized-large.gif",
+                        );
+                    else if (userPass)
+                        embedReply(
+                            `你成功過五關！ (${userCards.join(", ")})`,
+                            buttonEmbed,
+                            "#00ff00",
+                            "https://media.giphy.com/media/l41m3YpztVBtugahW/giphy.gif",
                         );
                     else embedReply(`平手！`, buttonEmbed, "#0000ff");
                 }
