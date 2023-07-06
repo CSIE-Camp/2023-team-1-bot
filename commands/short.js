@@ -1,0 +1,118 @@
+const {
+    SlashCommandBuilder,
+    EmbedBuilder,
+    ButtonBuilder,
+    ButtonStyle,
+    ActionRowBuilder,
+    Client,
+} = require("discord.js");
+const fs = require("node:fs");
+module.exports = {
+    data: new SlashCommandBuilder().setName("short").setDescription("Play short! (射龍門)"),
+    /**
+     *
+     * @param {Client} client
+     * @param {import('discord.js').ChatInputCommandInteraction} interaction
+     */
+    async execute(client, interaction) {
+        const Discord = require("discord.js");
+        let pool = 200; // 全局變數，用於保存彩金總額
+
+        // 當機器人啟動時執行的代碼
+        client.on("ready", () => {
+            console.log(`機器人已經登入，目前登入的伺服器數量： ${client.guilds.cache.size}`);
+        });
+
+        // 當收到訊息時執行的代碼
+        client.on("message", (message) => {
+            // 檢查是否為指定的命令
+            if (message.content === "!開始遊戲") {
+                startGame(message.author);
+            }
+        });
+
+        // 遊戲開始函式
+        function startGame(player) {
+            const minimumBet = 100;
+            const pool = minimumBet * 2;
+
+            // 發牌
+            const playerCards = drawCards(2);
+            const dealerCards = drawCards(2);
+
+            // 玩家下注
+            const playerBet = Math.min(pool, minimumBet); // 玩家下注金額，最高為桌面中央的彩金總額
+            const thirdCard = drawCards(1)[0]; // 第三張牌
+
+            let resultMessage = `玩家 ${player} 的牌：${playerCards.join(", ")}\n`;
+            resultMessage += `莊家的牌：${dealerCards[0]}, ?\n`;
+            resultMessage += `第三張牌：${thirdCard}\n\n`;
+
+            // 判斷玩家是否撞柱
+            if (playerCards[0] === playerCards[1]) {
+                const guess = "大"; // 玩家選擇比牌點數大或小
+                const isCorrectGuess =
+                    (guess === "大" && thirdCard > playerCards[0]) ||
+                    (guess === "小" && thirdCard < playerCards[0]);
+                if (isCorrectGuess) {
+                    resultMessage += `恭喜！你猜對了，拿回 ${playerBet} 分！\n`;
+                } else {
+                    const penalty = playerBet * 3; // 玩家撞柱，賠三倍下注額
+                    resultMessage += `很抱歉，你猜錯了，需賠 ${penalty} 分！\n`;
+                    pool += penalty;
+                }
+            } else {
+                if (thirdCard > Math.min(...playerCards) && thirdCard < Math.max(...playerCards)) {
+                    resultMessage += `恭喜！你拿回 ${playerBet} 分！\n`;
+                } else if (
+                    thirdCard === Math.min(...playerCards) ||
+                    thirdCard === Math.max(...playerCards)
+                ) {
+                    const penalty = playerBet * 2; // 玩家撞柱，賠兩倍下注額
+                    resultMessage += `很抱歉，你撞柱了，需賠 ${penalty} 分！\n`;
+                    pool += penalty;
+                } else {
+                    const penalty = playerBet; // 玩家賠下注額
+                    resultMessage += `很抱歉，你輸了，需賠 ${penalty} 分！\n`;
+                    pool += penalty;
+                }
+            }
+
+            resultMessage += `目前彩池總額：${pool} 分`;
+
+            pool += playerBet; // 更新 pool 的值
+
+            // 回覆結果
+            message.channel.send(resultMessage);
+        }
+
+        // 輔助函式：從牌堆中抽取指定數量的牌
+        function drawCards(numCards) {
+            const suits = ["♠️", "♥️", "♦️", "♣️"];
+            const values = ["A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"];
+            const deck = [];
+
+            for (const suit of suits) {
+                for (const value of values) {
+                    deck.push(`${value}${suit}`);
+                }
+            }
+
+            const drawnCards = [];
+
+            for (let i = 0; i < numCards; i++) {
+                const randomIndex = Math.floor(Math.random() * deck.length);
+                const card = deck.splice(randomIndex, 1)[0];
+                drawnCards.push(card);
+            }
+
+            return drawnCards;
+        }
+
+        // 設置你的 Discord Bot Token
+        const token = "MTEyNTgyMDM4NDc2MDA1Nzk4Nw.G1hVef.9zIaVrYwViGqCSRfbo_Tj4iiIQuX40a63duNFk";
+
+        // 登入機器人
+        client.login(token);
+    },
+};

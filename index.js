@@ -70,3 +70,8 @@ function loadAllCommands(client, directory) {
         .then((data) => console.log(`Successfully registered ${data.length} application commands.`))
         .catch(console.error);
 }
+
+
+
+
+
