@@ -69,6 +69,66 @@ module.exports = {
             .setCustomId(cards[1])
             .setLabel(cards[1])
             .setStyle("Primary");
+        const button3 = new ButtonBuilder()
+            .setCustomId(cards[2])
+            .setLabel(cards[2])
+            .setStyle("Primary");
+        const button4 = new ButtonBuilder()
+            .setCustomId(cards[3])
+            .setLabel(cards[3])
+            .setStyle("Primary");
+        const button5 = new ButtonBuilder()
+            .setCustomId(cards[4])
+            .setLabel(cards[4])
+            .setStyle("Primary");
+        const button6 = new ButtonBuilder()
+            .setCustomId(cards[5])
+            .setLabel(cards[5])
+            .setStyle("Primary");
+        const button7 = new ButtonBuilder()
+            .setCustomId(cards[6])
+            .setLabel(cards[6])
+            .setStyle("Primary");
+        const button8 = new ButtonBuilder()
+            .setCustomId(cards[7])
+            .setLabel(cards[7])
+            .setStyle("Primary");
+        const button9 = new ButtonBuilder()
+            .setCustomId(cards[8])
+            .setLabel(cards[8])
+            .setStyle("Primary");
+        const button10 = new ButtonBuilder()
+            .setCustomId(cards[9])
+            .setLabel(cards[9])
+            .setStyle("Primary");
+        const button11 = new ButtonBuilder()
+            .setCustomId(cards[10])
+            .setLabel(cards[10])
+            .setStyle("Primary");
+        const button12 = new ButtonBuilder()
+            .setCustomId(cards[11])
+            .setLabel(cards[11])
+            .setStyle("Primary");
+        const button13 = new ButtonBuilder()
+            .setCustomId(cards[12])
+            .setLabel(cards[12])
+            .setStyle("Primary");
+        const button14 = new ButtonBuilder()
+            .setCustomId(cards[13])
+            .setLabel(cards[13])
+            .setStyle("Primary");
+        const button15 = new ButtonBuilder()
+            .setCustomId(cards[14])
+            .setLabel(cards[14])
+            .setStyle("Primary");
+        const button16 = new ButtonBuilder()
+            .setCustomId(cards[15])
+            .setLabel(cards[15])
+            .setStyle("Primary");
+        const button17 = new ButtonBuilder()
+            .setCustomId(cards[16])
+            .setLabel(cards[16])
+            .setStyle("Primary");
         // console.log(...buttons);
         const row = new ActionRowBuilder().addComponents(button1, button2);
         const embed = new EmbedBuilder()
