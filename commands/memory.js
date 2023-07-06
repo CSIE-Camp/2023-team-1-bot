@@ -83,62 +83,62 @@ module.exports = {
 
         // const: ({ components } = undefined || {}),
 
-        // const user = interaction.user;
-        // const filter = (interaction) => interaction.user.id === user.id && interaction.isButton();
+        const user = interaction.user;
+        const filter = (interaction) => interaction.user.id === user.id && interaction.isButton();
 
-        // const matchedCards = new Set();
-        // let flippedCards = [];
+        const matchedCards = new Set();
+        let flippedCards = [];
 
-        // const collector = interaction.channel.createMessageComponentCollector({
-        //     filter,
-        //     time: 30000,
-        // });
-        // collector.on("collect", async (button) => {
-        //     button.deferUpdate();
+        const collector = interaction.channel.createMessageComponentCollector({
+            filter,
+            time: 30000,
+        });
+        collector.on("collect", async (button) => {
+            button.deferUpdate();
 
-        //     if (flippedCards.length === 2) {
-        //         await interaction.channel.send("一次只能翻轉兩張卡牌！");
-        //         return;
-        //     }
+            if (flippedCards.length === 2) {
+                await interaction.channel.send("一次只能翻轉兩張卡牌！");
+                return;
+            }
 
-        //     if (matchedCards.has(button.customId)) {
-        //         await interaction.channel.send("這張卡牌已經配對成功！");
-        //         return;
-        //     }
+            if (matchedCards.has(button.customId)) {
+                await interaction.channel.send("這張卡牌已經配對成功！");
+                return;
+            }
 
-        //     flippedCards.push(button);
+            flippedCards.push(button);
 
-        //     if (flippedCards.length === 2) {
-        //         const [card1, card2] = flippedCards;
+            if (flippedCards.length === 2) {
+                const [card1, card2] = flippedCards;
 
-        //         if (card1.customId === card2.customId) {
-        //             matchedCards.add(card1.customId);
-        //             flippedCards = [];
-        //             if (matchedCards.size === cards.length) {
-        //                 await interaction.channel.send("恭喜！你已經成功配對所有的卡牌！");
-        //                 let earnings = 2 + entrance_fee;
-        //                 collector.stop();
-        //             }
-        //         } else {
-        //             setTimeout(() => {
-        //                 card1.setDisabled(true);
-        //                 card2.setDisabled(true);
-        //                 card1.setStyle("SECONDARY");
-        //                 card2.setStyle("SECONDARY");
-        //                 card1.setLabel("❌");
-        //                 card2.setLabel("❌");
-        //                 flippedCards = [];
-        //                 interaction.channel.send("卡牌不相符。再試一次！");
-        //             }, 1000);
-        //         }
-        //     }
-        // });
+                if (card1.customId === card2.customId) {
+                    matchedCards.add(card1.customId);
+                    flippedCards = [];
+                    if (matchedCards.size === cards.length) {
+                        await interaction.channel.send("恭喜！你已經成功配對所有的卡牌！");
+                        let earnings = 2 + entrance_fee;
+                        collector.stop();
+                    }
+                } else {
+                    setTimeout(() => {
+                        card1.setDisabled(true);
+                        card2.setDisabled(true);
+                        card1.setStyle("SECONDARY");
+                        card2.setStyle("SECONDARY");
+                        card1.setLabel("❌");
+                        card2.setLabel("❌");
+                        flippedCards = [];
+                        interaction.channel.send("卡牌不相符。再試一次！");
+                    }, 1000);
+                }
+            }
+        });
 
-        // collector.on("end", () => {
-        //     if (matchedCards.size < cards.length) {
-        //         interaction.channel.send("時間到！遊戲結束。");
-        //     }
-        //
+        collector.on("end", () => {
+            if (matchedCards.size < cards.length) {
+                interaction.channel.send("時間到！遊戲結束。");
+            }
+        });
 
         // //在所有資料中尋找呼叫此指令玩家的資料
         // let found = 0;
