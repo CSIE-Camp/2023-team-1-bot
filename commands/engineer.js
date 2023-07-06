@@ -43,39 +43,39 @@ module.exports = {
         //你要做的事很像 row = build row ( components = buttonScissors , buttonRock , buttonPaper )
         //TODO 2: buttonRow 等於什麼呢？
         //const buttonRow = ...
+        for (let run = 0; run < 0; run++) {
+            const buttonRow = new ActionRowBuilder().addComponents(
+                bugButton,
+                drinkButton,
+                bumpButton,
+                codeButton,
+            );
 
-        const buttonRow = new ActionRowBuilder().addComponents(
-            bugButton,
-            drinkButton,
-            bumpButton,
-            codeButton,
-        );
+            interaction.followUp({ embeds: [buttonEmbed], components: [buttonRow] });
 
-        interaction.reply({ embeds: [buttonEmbed], components: [buttonRow] });
+            //建立 collector
+            const collector = interaction.channel.createMessageComponentCollector({ time: 15000 });
 
-        //建立 collector
-        const collector = interaction.channel.createMessageComponentCollector({ time: 15000 });
+            //等待 collector 蒐集到玩家案的按鈕
+            collector.on("collect", async (collected) => {
+                //電腦隨機出拳
+                //0 is scissors, 1 is rock, 2 is paper
+                const computerChoice = Math.floor(Math.random() * 4);
 
-        //等待 collector 蒐集到玩家案的按鈕
-        collector.on("collect", async (collected) => {
-            //電腦隨機出拳
-            //0 is scissors, 1 is rock, 2 is paper
-            const computerChoice = Math.floor(Math.random() * 4);
+                //利用玩家所按按鈕的 customId 來判斷玩家的選擇
+                let playerChoice;
+                //TODO 3: Do the same thing in rock and paper
 
-            //利用玩家所按按鈕的 customId 來判斷玩家的選擇
-            let playerChoice;
-            //TODO 3: Do the same thing in rock and paper
-
-            if (collected.customId === "code") {
-                playerChoice = 0;
-            } else if (collected.customId === "bump") {
-                playerChoice = 1;
-            } else if (collected.customId === "drink") {
-                playerChoice = 2;
-            } else if (collected.customId === "bug") {
-                playerChoice = 3;
-            }
-
+                if (collected.customId === "code") {
+                    playerChoice = 0;
+                } else if (collected.customId === "bump") {
+                    playerChoice = 1;
+                } else if (collected.customId === "drink") {
+                    playerChoice = 2;
+                } else if (collected.customId === "bug") {
+                    playerChoice = 3;
+                }
+            });
             //判斷玩家勝利，電腦勝利或平手
             let winner;
             // 利用let turn = turn*-1
@@ -157,6 +157,7 @@ module.exports = {
                         }
                 }
             }
+
             // for迴圈記得判斷winner=1or-1要break
 
             //從結果計算獲得/失去的 money
@@ -206,6 +207,12 @@ module.exports = {
 
             //關閉 collector
             //collector.stop();
-        });
+
+            if (winner == 1) {
+                break;
+            } else if (winner == -1) {
+                break;
+            }
+        }
     },
 };
