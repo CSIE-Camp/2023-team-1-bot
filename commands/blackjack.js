@@ -98,6 +98,9 @@ module.exports = {
                 const newCard = hitCard(cards, userCards);
                 buttonEmbed.setDescription(`你抽到了 ${newCard}`);
                 userScore = judgeContainedCase(userCards);
+                if (usercardnum === 5) {
+                    userPass = true;
+                }
                 if (userScore > 21) {
                     userBomb = true;
                 } else if (userScore === 21) {
@@ -119,9 +122,6 @@ module.exports = {
 
             //topic : 判斷輸贏
             buttonEmbed = new EmbedBuilder().setColor("#ffffff").setTitle(`決戰21點`);
-            if (usercardnum === 5) {
-                userPass = true;
-            }
             if (userBomb)
                 embedReply(
                     `你爆牌了！ (${userCards.join(", ")})`,
@@ -139,7 +139,28 @@ module.exports = {
                     );
                 else {
                     console.log(userScore, computerScore);
-                    if (userScore > computerScore)
+                    if (userPass == true && userScore == 21)
+                        embedReply(
+                            `恭喜拿到4.5倍最高賠率！ (${userCards.join(", ")})`,
+                            buttonEmbed,
+                            "#00ff00",
+                            "https://media.tenor.com/mm6gNAyiobUAAAAC/emotional-damage.gif",
+                        );
+                    else if (userPass == true && userScore < 21)
+                        embedReply(
+                            `你成功過五關，3倍賠率！ (${userCards.join(", ")})`,
+                            buttonEmbed,
+                            "#00ff00",
+                            "https://media.giphy.com/media/l41m3YpztVBtugahW/giphy.gif",
+                        );
+                    if (userScore == 21)
+                        embedReply(
+                            `你剛好達成21點，1.5倍賠率！ Computer :${computerCards.join(", ")}`,
+                            buttonEmbed,
+                            "#00ff00",
+                            "https://media.giphy.com/media/2S9Hio4GAGUEZXxUg4/giphy.gif",
+                        );
+                    else if (userScore > computerScore)
                         embedReply(
                             `你贏了！ Computer :${computerCards.join(", ")}`,
                             buttonEmbed,
@@ -152,13 +173,6 @@ module.exports = {
                             buttonEmbed,
                             "ff0000",
                             "https://media.giphy.com/media/lwYxf0qKEjnoI/giphy-downsized-large.gif",
-                        );
-                    else if (userPass)
-                        embedReply(
-                            `你成功過五關！ (${userCards.join(", ")})`,
-                            buttonEmbed,
-                            "#00ff00",
-                            "https://media.giphy.com/media/l41m3YpztVBtugahW/giphy.gif",
                         );
                     else embedReply(`平手！`, buttonEmbed, "#0000ff");
                 }
