@@ -1,3 +1,4 @@
+//version 2.0 By Contributor : samsam0325
 const {
     SlashCommandBuilder,
     EmbedBuilder,
