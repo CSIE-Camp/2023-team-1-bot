@@ -100,6 +100,7 @@ module.exports = {
                 userScore = judgeContainedCase(userCards);
                 if (usercardnum === 5) {
                     userPass = true;
+                    await collected.reply({ embeds: [buttonEmbed] });
                 }
                 if (userScore > 21) {
                     userBomb = true;
@@ -146,35 +147,43 @@ module.exports = {
                             "#00ff00",
                             "https://media.tenor.com/mm6gNAyiobUAAAAC/emotional-damage.gif",
                         );
-                    else if (userPass == true && userScore < 21)
-                        embedReply(
-                            `你成功過五關，3倍賠率！ (${userCards.join(", ")})`,
-                            buttonEmbed,
-                            "#00ff00",
-                            "https://media.giphy.com/media/l41m3YpztVBtugahW/giphy.gif",
-                        );
-                    if (userScore == 21)
-                        embedReply(
-                            `你剛好達成21點，1.5倍賠率！ Computer :${computerCards.join(", ")}`,
-                            buttonEmbed,
-                            "#00ff00",
-                            "https://media.giphy.com/media/2S9Hio4GAGUEZXxUg4/giphy.gif",
-                        );
-                    else if (userScore > computerScore)
-                        embedReply(
-                            `你贏了！ Computer :${computerCards.join(", ")}`,
-                            buttonEmbed,
-                            "#00ff00",
-                            "https://media.giphy.com/media/2S9Hio4GAGUEZXxUg4/giphy.gif",
-                        );
-                    else if (userScore < computerScore)
-                        embedReply(
-                            `你輸了！ Computer :${computerCards.join(", ")}`,
-                            buttonEmbed,
-                            "ff0000",
-                            "https://media.giphy.com/media/lwYxf0qKEjnoI/giphy-downsized-large.gif",
-                        );
-                    else embedReply(`平手！`, buttonEmbed, "#0000ff");
+                    else {
+                        if (userPass == true && userScore < 21)
+                            embedReply(
+                                `你成功過五關，3倍賠率！ (${userCards.join(", ")})`,
+                                buttonEmbed,
+                                "#00ff00",
+                                "https://media.giphy.com/media/l41m3YpztVBtugahW/giphy.gif",
+                            );
+                        else {
+                            if (userScore == 21)
+                                embedReply(
+                                    `你剛好達成21點，1.5倍賠率！ Computer :${computerCards.join(
+                                        ", ",
+                                    )}`,
+                                    buttonEmbed,
+                                    "#00ff00",
+                                    "https://media.giphy.com/media/2S9Hio4GAGUEZXxUg4/giphy.gif",
+                                );
+                            else {
+                                if (userScore > computerScore)
+                                    embedReply(
+                                        `你贏了！ Computer :${computerCards.join(", ")}`,
+                                        buttonEmbed,
+                                        "#00ff00",
+                                        "https://media.giphy.com/media/2S9Hio4GAGUEZXxUg4/giphy.gif",
+                                    );
+                                else if (userScore < computerScore)
+                                    embedReply(
+                                        `你輸了！ Computer :${computerCards.join(", ")}`,
+                                        buttonEmbed,
+                                        "ff0000",
+                                        "https://media.giphy.com/media/lwYxf0qKEjnoI/giphy-downsized-large.gif",
+                                    );
+                                else embedReply(`平手！`, buttonEmbed, "#0000ff");
+                            }
+                        }
+                    }
                 }
             }
             async function embedReply(reply, Embed, color = "#ffffff", image = null) {
