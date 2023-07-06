@@ -15,7 +15,7 @@ module.exports = {
         const embed = new EmbedBuilder()
             .setColor(0x0099ff)
             .setTitle("來猜牌!")
-            .setDescription("目前玩家:${user_name}\n" + `你已經翻了:`)
+            .setDescription(`目前玩家:${user_name}\n` + `你已經翻了:`)
             .setTimestamp();
         interaction.reply({ embeds: [embed] });
         console.log(user_name);
