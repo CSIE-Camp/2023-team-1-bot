@@ -1,3 +1,6 @@
+// topic : 在 ds.js 上尚未開發完成，但已經可以在一般 JS 上執行
+//
+
 const {
     SlashCommandBuilder,
     EmbedBuilder,
