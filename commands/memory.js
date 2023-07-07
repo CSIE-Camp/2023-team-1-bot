@@ -9,7 +9,7 @@ const {
 const { ButtonStyle } = require("discord.js");
 // discord.js/typings
 module.exports = {
-    data: new SlashCommandBuilder().setName("memory2").setDescription("玩一個記憶卡牌遊戲"),
+    data: new SlashCommandBuilder().setName("memory").setDescription("玩一個記憶卡牌遊戲"),
     async execute(client, interaction) {
         //topic : generate the card and shuffle them
         const cardsType = ["🐶", "🐱", "🐭", "🐹", "🐰", "🐻", "🐼", "🐨", "🐯", "🦁"];
