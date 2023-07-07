@@ -16,7 +16,14 @@ module.exports = {
      * @param {import('discord.js').Interaction} interaction
      */
     async execute(client, interaction) {
-        //judge player or computer
+        //topic : declare the button
+        const coding = new ButtonBuilder()
+            .setCustomId("0")
+            .setLabel("🧑🏻‍💻 Coding")
+            .setStyle("Primary");
+        const bump = new ButtonBuilder().setCustomId("1").setLabel("🩸 爆肝").setStyle("Primary");
+        const coke = new ButtonBuilder().setCustomId("2").setLabel("🍾快樂水").setStyle("Primary");
+        const debug = new ButtonBuilder().setCustomId("3").setLabel("🐛 Debug").setStyle("Primary");
         let tr = 1;
         let winner = 0;
         let turn = 0;
