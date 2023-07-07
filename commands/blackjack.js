@@ -1,3 +1,4 @@
+//version 2.0 By Contributor : samsam0325
 const {
     SlashCommandBuilder,
     EmbedBuilder,
@@ -99,12 +100,10 @@ module.exports = {
                 const newCard = hitCard(cards, userCards);
                 buttonEmbed.setDescription(`你抽到了 ${newCard}`);
                 userScore = judgeContainedCase(userCards);
-                if (usercardnum === 5) {
-                    userPass = true;
-                    await collected.reply({ embeds: [buttonEmbed] });
-                }
                 if (userScore > 21) {
                     userBomb = true;
+                } else if (usercardnum === 5) {
+                    userPass = true;
                 } else if (userScore === 21) {
                     await collected.reply({ embeds: [buttonEmbed] });
                 } else {
@@ -157,7 +156,7 @@ module.exports = {
                                 "https://media.giphy.com/media/l41m3YpztVBtugahW/giphy.gif",
                             );
                         else {
-                            if (userScore == 21)
+                            if (userScore == 21 && computerScore < 21)
                                 embedReply(
                                     `你剛好達成21點，1.5倍賠率！ Computer :${computerCards.join(
                                         ", ",
