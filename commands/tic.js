@@ -17,92 +17,170 @@ module.exports = {
      * @param {import('discord.js').Interaction} interaction
      */
     async execute(client, interaction) {
-        const Column1 = new ButtonBuilder()
+        var Column1 = new ButtonBuilder()
             .setCustomId("1")
             .setStyle(ButtonStyle.Primary)
             .setLabel("戳我");
-        const Column2 = new ButtonBuilder()
+        var Column2 = new ButtonBuilder()
             .setCustomId("2")
             .setStyle(ButtonStyle.Primary)
             .setLabel("戳我");
-        const Column3 = new ButtonBuilder()
+        var Column3 = new ButtonBuilder()
             .setCustomId("3")
             .setStyle(ButtonStyle.Primary)
             .setLabel("戳我");
-        const Column4 = new ButtonBuilder()
+        var Column4 = new ButtonBuilder()
             .setCustomId("4")
             .setStyle(ButtonStyle.Primary)
             .setLabel("戳我");
-        const Column5 = new ButtonBuilder()
+        var Column5 = new ButtonBuilder()
             .setCustomId("5")
             .setStyle(ButtonStyle.Primary)
             .setLabel("戳我");
-        const Column6 = new ButtonBuilder()
+        var Column6 = new ButtonBuilder()
             .setCustomId("6")
             .setStyle(ButtonStyle.Primary)
             .setLabel("戳我");
-        const Column7 = new ButtonBuilder()
+        var Column7 = new ButtonBuilder()
             .setCustomId("7")
             .setStyle(ButtonStyle.Primary)
             .setLabel("戳我");
-        const Column8 = new ButtonBuilder()
+        var Column8 = new ButtonBuilder()
             .setCustomId("8")
             .setStyle(ButtonStyle.Primary)
             .setLabel("戳我");
-        const Column9 = new ButtonBuilder()
+        var Column9 = new ButtonBuilder()
             .setCustomId("9")
             .setStyle(ButtonStyle.Primary)
             .setLabel("戳我");
 
-        var board = new Array();
-        board[0] = Column1;
-        board[1] = Column2;
-        board[2] = Column3;
-        board[3] = Column4;
-        board[4] = Column5;
-        board[5] = Column6;
-        board[6] = Column7;
-        board[7] = Column8;
-        board[8] = Column9;
-
-        const buttonRow1 = new ActionRowBuilder().addComponents(Column1, Column2, Column3);
-        const buttonRow2 = new ActionRowBuilder().addComponents(Column4, Column5, Column6);
-        const buttonRow3 = new ActionRowBuilder().addComponents(Column7, Column8, Column9);
+        var buttonRow1 = new ActionRowBuilder().addComponents(Column1, Column2, Column3);
+        var buttonRow2 = new ActionRowBuilder().addComponents(Column4, Column5, Column6);
+        var buttonRow3 = new ActionRowBuilder().addComponents(Column7, Column8, Column9);
         interaction.reply({
             components: [buttonRow1, buttonRow2, buttonRow3],
         });
         const collector = interaction.channel.createMessageComponentCollector({ time: 120000 });
         collector.on("collect", (collected) => {
+            let Playerchoice;
+            let Playerturn = false;
             if (collected.customId === "1") {
-                Column1.setLabel("O");
+                Column1.setLabel("O").setDisabled(true);
+                interaction.followUp({
+                    components: [buttonRow1, buttonRow2, buttonRow3],
+                });
+                Playerchoice = 1;
             } else if (collected.customId === "2") {
-                Column2.setLabel("O");
+                Column2.setLabel("O").setDisabled(true);
+                interaction.followUp({
+                    components: [buttonRow1, buttonRow2, buttonRow3],
+                });
+                Playerchoice = 2;
             } else if (collected.customId === "3") {
-                const buttonRow1 = new ActionRowBuilder().addComponents(
-                    board[0],
-                    board[1],
-                    board[2],
-                );
-                collected.update({ components: [buttonRow1, buttonRow2, buttonRow3] });
+                Column3.setLabel("O").setDisabled(true);
+                interaction.followUp({
+                    components: [buttonRow1, buttonRow2, buttonRow3],
+                });
+                Playerchoice = 3;
             } else if (collected.customId === "4") {
-                const buttonRow2 = new ActionRowBuilder().addComponents(O, Column5, Column6);
-                collected.update({ components: [buttonRow1, buttonRow2, buttonRow3] });
+                Column4.setLabel("O").setDisabled(true);
+                interaction.followUp({
+                    components: [buttonRow1, buttonRow2, buttonRow3],
+                });
+                Playerchoice = 4;
             } else if (collected.customId === "5") {
-                const buttonRow2 = new ActionRowBuilder().addComponents(Column4, O, Column6);
-                collected.update({ components: [buttonRow1, buttonRow2, buttonRow3] });
+                Column5.setLabel("O").setDisabled(true);
+                interaction.followUp({
+                    components: [buttonRow1, buttonRow2, buttonRow3],
+                });
+                Playerchoice = 5;
             } else if (collected.customId === "6") {
-                const buttonRow2 = new ActionRowBuilder().addComponents(Column4, Column5, O);
-                collected.update({ components: [buttonRow1, buttonRow2, buttonRow3] });
+                Column6.setLabel("O").setDisabled(true);
+                interaction.followUp({
+                    components: [buttonRow1, buttonRow2, buttonRow3],
+                });
+                Playerchoice = 6;
             } else if (collected.customId === "7") {
-                const buttonRow3 = new ActionRowBuilder().addComponents(O, Column8, Column9);
-                collected.update({ components: [buttonRow1, buttonRow2, buttonRow3] });
+                Column7.setLabel("O").setDisabled(true);
+                interaction.followUp({
+                    components: [buttonRow1, buttonRow2, buttonRow3],
+                });
+                Playerchoice = 7;
             } else if (collected.customId === "8") {
-                const buttonRow3 = new ActionRowBuilder().addComponents(Column7, O, Column9);
-                collected.update({ components: [buttonRow1, buttonRow2, buttonRow3] });
+                Column8.setLabel("O").setDisabled(true);
+                interaction.followUp({
+                    components: [buttonRow1, buttonRow2, buttonRow3],
+                });
+                Playerchoice = 8;
             } else {
-                const buttonRow3 = new ActionRowBuilder().addComponents(Column7, Column8, O);
-                collected.update({ components: [buttonRow1, buttonRow2, buttonRow3] });
+                Column9.setLabel("O").setDisabled(true);
+                interaction.followUp({
+                    components: [buttonRow1, buttonRow2, buttonRow3],
+                });
+                Playerchoice = 9;
             }
+            Playerturn = true;
+            const precomputerChoice = new Array();
+            var computerChoice = Math.floor(Math.random() * 9) + 1;
+            do {
+                computerChoice = Math.floor(Math.random() * 9) + 1;
+            } while (computerChoice == Playerchoice && computerChoice == precomputerChoice);
+            if (computerChoice == 1) {
+                Column1.setLabel("X").setDisabled(true);
+                interaction.followUp({
+                    components: [buttonRow1, buttonRow2, buttonRow3],
+                });
+                precomputerChoice.push("1");
+            } else if (computerChoice === "2") {
+                Column2.setLabel("X").setDisabled(true);
+                interaction.followUp({
+                    components: [buttonRow1, buttonRow2, buttonRow3],
+                });
+                precomputerChoice.push("2");
+            } else if (collected.customId === "3") {
+                Column3.setLabel("X").setDisabled(true);
+                interaction.followUp({
+                    components: [buttonRow1, buttonRow2, buttonRow3],
+                });
+                precomputerChoice.push("3");
+            } else if (collected.customId === "4") {
+                Column4.setLabel("X").setDisabled(true);
+                interaction.followUp({
+                    components: [buttonRow1, buttonRow2, buttonRow3],
+                });
+                precomputerChoice.push("4");
+            } else if (collected.customId === "5") {
+                Column5.setLabel("X").setDisabled(true);
+                interaction.followUp({
+                    components: [buttonRow1, buttonRow2, buttonRow3],
+                });
+                precomputerChoice.push("6");
+            } else if (collected.customId === "6") {
+                Column6.setLabel("X").setDisabled(true);
+                interaction.followUp({
+                    components: [buttonRow1, buttonRow2, buttonRow3],
+                });
+                precomputerChoice.push("7");
+            } else if (collected.customId === "7") {
+                Column7.setLabel("X").setDisabled(true);
+                interaction.followUp({
+                    components: [buttonRow1, buttonRow2, buttonRow3],
+                });
+                precomputerChoice.push("8");
+            } else if (collected.customId === "8") {
+                Column8.setLabel("X").setDisabled(true);
+                interaction.followUp({
+                    components: [buttonRow1, buttonRow2, buttonRow3],
+                });
+                precomputerChoice.push("8");
+            } else {
+                Column9.setLabel("X").setDisabled(true);
+                interaction.followUp({
+                    components: [buttonRow1, buttonRow2, buttonRow3],
+                });
+                precomputerChoice.push("9");
+            }
+            Playerturn = false;
         });
     },
 };
