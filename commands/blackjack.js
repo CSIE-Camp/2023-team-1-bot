@@ -77,7 +77,8 @@ module.exports = {
             .setTitle(`決戰21點`)
             .setDescription(allStr);
         if (cardCalc(userCards, true) === 21) {
-            await interaction.reply({ embeds: [buttonEmbed], components: [seeResult] });
+            const blackJack = new ActionRowBuilder.addComponents([seeResult]);
+            await interaction.reply({ embeds: [buttonEmbed], components: [blackJack] });
         } else {
             allStr += askStr;
             buttonEmbed.setDescription(allStr);
