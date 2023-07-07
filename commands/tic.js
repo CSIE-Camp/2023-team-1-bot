@@ -53,16 +53,6 @@ module.exports = {
             .setCustomId("9")
             .setStyle(ButtonStyle.Primary)
             .setLabel("戳我");
-        const O = new ButtonBuilder()
-            .setCustomId("O")
-            .setStyle(ButtonStyle.Primary)
-            .setLabel("O")
-            .setDisabled(true);
-        const X = new ButtonBuilder()
-            .setCustomId("X")
-            .setStyle(ButtonStyle.Primary)
-            .setLabel("X")
-            .setDisabled(true);
 
         var board = new Array();
         board[0] = Column1;
@@ -84,21 +74,9 @@ module.exports = {
         const collector = interaction.channel.createMessageComponentCollector({ time: 120000 });
         collector.on("collect", (collected) => {
             if (collected.customId === "1") {
-                board[0] = O;
-                const buttonRow1 = new ActionRowBuilder().addComponents(
-                    board[0],
-                    board[1],
-                    board[2],
-                );
-                collected.update({ components: [buttonRow1, buttonRow2, buttonRow3] });
+                Column1.setLabel("O");
             } else if (collected.customId === "2") {
-                board[1] = O;
-                const buttonRow1 = new ActionRowBuilder().addComponents(
-                    board[0],
-                    board[1],
-                    board[2],
-                );
-                collected.update({ components: [buttonRow1, buttonRow2, buttonRow3] });
+                Column2.setLabel("O");
             } else if (collected.customId === "3") {
                 const buttonRow1 = new ActionRowBuilder().addComponents(
                     board[0],
